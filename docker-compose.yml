@@ -3,7 +3,6 @@ version: '3.1'
 services:
   radiusonly:
     build: .
-    container_name: radius
     restart: unless-stopped
     environment:
       - MYSQL_HOST
