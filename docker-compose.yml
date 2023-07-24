@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  radiusonly:
+    build: .
+    container_name: radius
+    restart: unless-stopped
+    environment:
+      - MYSQL_HOST
+      - MYSQL_PORT
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - TZ
+    ports:
+      - 2812:1812/udp
+      - 2813:1813/udp
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
