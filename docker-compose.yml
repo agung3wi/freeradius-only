@@ -32,6 +32,7 @@ services:
       - MYSQL_PASSWORD
     restart: always
     volumes:
+      - ./raddb/sql:/docker-entrypoint-initdb.d
       - mysqlradius:/var/lib/mysql
 
   pmaradius:
