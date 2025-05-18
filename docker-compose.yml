@@ -1,9 +1,12 @@
 version: '3.1'
 
 services:
-  radiusonly:
+  radius:
     build: .
     restart: unless-stopped
+    container_name: radius
+    links:
+      - mysqlradius
     environment:
       - MYSQL_HOST
       - MYSQL_PORT
@@ -12,7 +15,35 @@ services:
       - MYSQL_PASSWORD
       - TZ
     ports:
-      - 2812:1812/udp
-      - 2813:1813/udp
+      - 1802:1812/udp
+      - 1803:1813/udp
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
+
+  mysqlradius:
+    image: mysql:5.7
+    container_name: mysqlradius
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    restart: always
+    volumes:
+      - mysqlradius:/var/lib/mysql
+
+  pmaradius:
+    image: phpmyadmin/phpmyadmin
+    container_name: pmaradius
+    links:
+      - mysqlradius
+    environment:
+      PMA_HOST: mysqlradius
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 9001:80
+
+volumes:
+  mysqlradius:
