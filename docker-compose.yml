@@ -23,13 +23,14 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
 
   mysqlradius:
-    image: mysql:5.7
+    image: mariadb
     container_name: mysqlradius
     environment:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_DATABASE
       - MYSQL_USER
       - MYSQL_PASSWORD
+      - TZ
     restart: always
     volumes:
       - ./raddb/sql:/docker-entrypoint-initdb.d
