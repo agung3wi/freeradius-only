@@ -158,10 +158,3 @@ CREATE TABLE nas (
   PRIMARY KEY (id),
   KEY nasname (nasname)
 );
-
-
-CREATE TABLE nas_user (
-  id int(10) NOT NULL auto_increment,
-  username varchar(64) NOT NULL default '',
-  ip varchar(20) NOT NULL
-);
